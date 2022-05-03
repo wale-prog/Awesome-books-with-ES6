@@ -1,91 +1,38 @@
 import Books from './modules/Books.js';
+import pageNav from './modules/page_nav.js';
+import manageDate from './modules/dateNow.js';
+import createNewBook from './modules/createNewUI.js';
 
 const library = new Books(JSON.parse(localStorage.getItem('books')));
 window.addEventListener('DOMContentLoaded', () => {
-    const awesomeBooks = document.getElementById('awesome-books');
-    const booksContainer = document.querySelector('.new-books');
-    const titleInput = document.querySelector('.title-input');
-    const authorInput = document.querySelector('.author-input');
-    const createNewBook = ({ title, author }) => {
-        const newBooksDiv = document.createElement('div');
-        const newBookTitle = document.createElement('p');
-        const newBookAuthor = document.createElement('p');
-        const button = document.createElement('button');
-        const titleNoSpace = title.replace(/\s+/g, '');
-        const removeId = `remove${titleNoSpace}`;
-        const divId = `div${titleNoSpace}`;
-        newBooksDiv.setAttribute('id', divId);
-        button.innerText = 'Remove';
-        button.className = 'remove-btn';
-        button.setAttribute('id', removeId);
-        newBookTitle.innerText = `${title} by ${author}`;
-        newBookAuthor.innerText = author;
-        newBooksDiv.append(newBookTitle, button);
-        booksContainer.append(newBooksDiv);
-    };
+  const awesomeBooks = document.getElementById('awesome-books');
+  const booksContainer = document.querySelector('.new-books');
+  const titleInput = document.querySelector('.title-input');
+  const authorInput = document.querySelector('.author-input');
 
-    const displayBooks = (books) => {
-        booksContainer.innerHTML = '';
-        books.forEach(createNewBook);
-        localStorage.setItem('books', JSON.stringify(books));
-    };
-    const booksListAction = (event) => {
-        const eventId = event.target.id;
-        if (eventId.includes('remove')) {
-            const bookTitle = eventId.replace('remove', '');
-            library.remove(bookTitle);
-            displayBooks(library.getAll());
-        }
-    };
-    awesomeBooks.onsubmit = (event) => {
-        event.preventDefault();
-        library.add(titleInput.value, authorInput.value);
-        displayBooks(library.getAll());
-        titleInput.value = '';
-        authorInput.value = '';
-    };
-    document.getElementById('top-books').addEventListener('click', booksListAction);
+  const displayBooks = (books) => {
+    booksContainer.innerHTML = '';
+    books.forEach(createNewBook);
+    localStorage.setItem('books', JSON.stringify(books));
+  };
+  const booksListAction = (event) => {
+    const eventId = event.target.id;
+    if (eventId.includes('remove')) {
+      const bookTitle = eventId.replace('remove', '');
+      library.remove(bookTitle);
+      displayBooks(library.getAll());
+    }
+  };
+  awesomeBooks.onsubmit = (event) => {
+    event.preventDefault();
+    library.add(titleInput.value, authorInput.value);
     displayBooks(library.getAll());
+    titleInput.value = '';
+    authorInput.value = '';
+  };
+  document.getElementById('top-books').addEventListener('click', booksListAction);
+  displayBooks(library.getAll());
 });
 
-const navList = document.querySelectorAll('.nav-list-item');
-
-const dateDisplay = document.querySelector('.date-display');
-const datePara = document.createElement('p');
-
-function manageDate(datePara) {
-    const date = new Date();
-    const myDay = ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat'];
-    const dayOfWeek = date.getDay();
-    const dayOfMonth = date.getDate();
-    const year = date.getFullYear();
-    const hour = date.getHours();
-    const minutes = date.getMinutes();
-    const innerPara = `${myDay[dayOfWeek]} Apr ${dayOfMonth}, ${year} ${hour}:${minutes}`;
-    datePara.innerHTML = innerPara;
-    dateDisplay.appendChild(datePara);
-}
-manageDate(datePara);
-
-const list = document.querySelector('.list');
-const addNew = document.querySelector('.add-new');
-const contact = document.getElementById('contact');
-
-for (let i = 0; i < navList.length; i += 1) {
-    navList[i].addEventListener('click', (event) => {
-        if (event.target.innerText === 'Add new') {
-            list.classList.add('hidden');
-            addNew.classList.remove('hidden');
-            contact.classList.add('hidden');
-        } else if (event.target.innerText === 'List') {
-            list.classList.remove('hidden');
-            addNew.classList.add('hidden');
-            contact.classList.add('hidden');
-        } else if (event.target.innerText === 'Contact') {
-            list.classList.add('hidden');
-            addNew.classList.add('hidden');
-            contact.classList.remove('hidden');
-        }
-        manageDate(datePara);
-    });
-}
+pageNav();
+manageDate();

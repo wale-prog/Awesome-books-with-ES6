@@ -31,8 +31,8 @@ Clone the repositry and open the index.html which is in the folder.
 
 ## Authors
 
-- GitHub: [@ahzamir](https://github.com/ahzamir),[@wale-prog](https://github.com/wale-prog)
-- Twitter: [@Wale_petan](https://twitter.com/Wale_Petan)
+- GitHub: [@wale-prog](https://github.com/wale-prog)
+- Twitter: [@wale_Petan](https://twitter.com/wale_Petan)
 - LinkedIn: [@walepetan](https://www.linkedin.com/in/walepetan/)
 
 
@@ -48,7 +48,7 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
+- Hat tip to [@ahzamir](https://github.com/ahzamir) for being awesome!
 - Inspiration
 - etc
 
